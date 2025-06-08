@@ -1,0 +1,192 @@
+Diapositiva 1: Título
+* Título: Entrenamiento de Modelos de Regresión Lineal y Regresión Logística
+* Subtítulo: Limpieza de datos, modelado, métricas y evolución a clasificación
+* Notas para el presentador: Introducción al tema, importancia de entender el proceso completo desde la limpieza hasta la evaluación.
+
+Diapositiva 2: Agenda / Índice
+* Limpieza y preparación de datos
+* División del dataset
+* Entrenamiento y validación de regresión lineal
+* Interpretación de coeficientes
+* Ejemplo práctico de interpretación
+* Funciones sklearn para regresión lineal
+* Evolución a regresión logística
+* Métricas y matriz de confusión para clasificación
+* Conclusiones y recomendaciones
+
+Diapositiva 3: Limpieza de datos – Exploración previa
+* Puntos clave:
+o Importancia de entender la calidad y estructura del dataset antes de modelar
+o Análisis descriptivo: medias, desviaciones, outliers
+o Visualización: mapas de calor para correlaciones y valores faltantes
+* Ejemplo visual:
+o Mapa de calor con seaborn.heatmap() mostrando correlaciones
+* Código ejemplo:
+python
+CopiarEditar
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.show()
+
+Diapositiva 4: Limpieza de datos – Tratamiento valores faltantes
+* Puntos clave:
+o Identificación de valores faltantes (df.isnull().sum())
+o Métodos para tratamiento:
+* Eliminación de filas o columnas
+* Imputación con media, mediana o moda
+* Técnicas avanzadas: modelos predictivos para imputar
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy='mean')
+df[['col1', 'col2']] = imputer.fit_transform(df[['col1', 'col2']])
+
+Diapositiva 5: Limpieza de datos – Normalización y one-hot encoding
+* Puntos clave:
+o Normalización para escalar variables numéricas y mejorar convergencia del modelo
+o Técnicas:
+* StandardScaler (media 0, desviación estándar 1)
+* MinMaxScaler (rango [0,1])
+o Variables categóricas transformadas con one-hot encoding para evitar orden implícito
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df[['num_feature']])
+
+encoder = OneHotEncoder(sparse=False)
+X_encoded = encoder.fit_transform(df[['categorical_feature']])
+
+Diapositiva 6: División del dataset
+* Puntos clave:
+o Separar datos para entrenamiento, validación y prueba para evaluar desempeño real
+o Proporciones típicas: 70% entrenamiento, 15% validación, 15% prueba
+o Uso de train_test_split() para dividir datos de forma reproducible
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.model_selection import train_test_split
+
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.3, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+Diapositiva 7: Entrenamiento de regresión lineal múltiple
+* Puntos clave:
+o Modelo de regresión lineal para predecir variable continua en función de varias independientes
+o Ajuste del modelo con datos de entrenamiento
+o Evaluación preliminar con datos de validación
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred_val = model.predict(X_val)
+
+Diapositiva 8: Métricas para regresión lineal
+* Puntos clave:
+o R²: proporción de varianza explicada
+o RMSE: error cuadrático medio, indica magnitud de error
+o MAE: error absoluto medio, más robusto a outliers
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+import numpy as np
+
+rmse = np.sqrt(mean_squared_error(y_val, y_pred_val))
+r2 = r2_score(y_val, y_pred_val)
+mae = mean_absolute_error(y_val, y_pred_val)
+
+Diapositiva 9: Interpretación de coeficientes en regresión lineal
+* Puntos clave:
+o Cada coeficiente representa el cambio esperado en la variable dependiente por unidad de cambio en la independiente, manteniendo otras constantes
+o Signo positivo o negativo indica dirección del efecto
+o Magnitud indica impacto relativo
+
+Diapositiva 9bis: Ejemplo práctico de interpretación de coeficientes
+* Suposición: Modelo predice precio vivienda
+* Variables: tamaño (m²), habitaciones, edad propiedad
+* Coeficientes:
+VariableCoeficienteInterpretaciónIntercepto5,000Precio base cuando variables = 0Tamaño (size)300Cada m² adicional incrementa precio en 300 unidadesHabitaciones10,000Cada habitación aumenta precio en 10,000 unidadesEdad (age)-1,500Cada año reduce precio en 1,500 unidades* Conclusión: Tamaño y habitaciones tienen impacto positivo; edad reduce valor (depreciación).
+
+Diapositiva 10: Pipeline sklearn para regresión lineal
+* Puntos clave:
+o Pipeline encadena preprocesamiento y modelo, facilita reproducibilidad y evita fugas de datos
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('regressor', LinearRegression())
+])
+pipeline.fit(X_train, y_train)
+y_pred_val = pipeline.predict(X_val)
+
+Diapositiva 11: Evolución a regresión logística – Concepto
+* Puntos clave:
+o Regresión logística para problemas de clasificación binaria
+o Modela probabilidad de pertenecer a clase positiva
+o Función sigmoide convierte combinación lineal a probabilidad
+
+Diapositiva 12: Pipeline sklearn para regresión logística
+* Puntos clave:
+o Pipeline similar a regresión lineal, con modelo LogisticRegression
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.linear_model import LogisticRegression
+
+pipeline_log = Pipeline([
+    ('scaler', StandardScaler()),
+    ('classifier', LogisticRegression())
+])
+pipeline_log.fit(X_train, y_train)
+y_pred_val = pipeline_log.predict(X_val)
+
+Diapositiva 13: Métricas para regresión logística
+* Puntos clave:
+o Accuracy: porcentaje de predicciones correctas
+o Precision: proporción de verdaderos positivos sobre predicciones positivas
+o Recall: proporción de verdaderos positivos sobre total de positivos reales
+o F1-score: balance entre precisión y recall
+o AUC-ROC: área bajo curva para clasificación binaria
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+
+acc = accuracy_score(y_val, y_pred_val)
+prec = precision_score(y_val, y_pred_val)
+rec = recall_score(y_val, y_pred_val)
+f1 = f1_score(y_val, y_pred_val)
+
+Diapositiva 14: Matriz de confusión
+* Puntos clave:
+o Matriz 2x2 que muestra TP, FP, TN, FN
+o Ayuda a entender errores del modelo
+* Código ejemplo:
+python
+CopiarEditar
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+cm = confusion_matrix(y_val, y_pred_val)
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+
+Diapositiva 15: Conclusiones y recomendaciones
+* Limpieza y preparación son clave para modelos robustos
+* Uso de pipelines para facilitar mantenimiento y evitar errores
+* Interpretar coeficientes para insights de negocio
+* Evaluar con métricas adecuadas según el problema (regresión vs clasificación)
+* Aplicación directa en toma de decisiones y análisis predictivo
+

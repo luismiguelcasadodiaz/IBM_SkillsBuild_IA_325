@@ -1,0 +1,74 @@
+[
+    {
+        "Mes": "Enero",
+        "Hortalizas": 12500,
+        "Frutas": 15200,
+        "Total": 27700
+    },
+    {
+        "Mes": "Febrero",
+        "Hortalizas": 11800,
+        "Frutas": 14300,
+        "Total": 26100
+    },
+    {
+        "Mes": "Marzo",
+        "Hortalizas": 13600,
+        "Frutas": 16000,
+        "Total": 29600
+    },
+    {
+        "Mes": "Abril",
+        "Hortalizas": 14200,
+        "Frutas": 15800,
+        "Total": 30000
+    },
+    {
+        "Mes": "Mayo",
+        "Hortalizas": 15000,
+        "Frutas": 17500,
+        "Total": 32500
+    },
+    {
+        "Mes": "Junio",
+        "Hortalizas": 16800,
+        "Frutas": 18200,
+        "Total": 35000
+    },
+    {
+        "Mes": "Julio",
+        "Hortalizas": 18500,
+        "Frutas": 20000,
+        "Total": 38500
+    },
+    {
+        "Mes": "Agosto",
+        "Hortalizas": 17900,
+        "Frutas": 19400,
+        "Total": 37300
+    },
+    {
+        "Mes": "Septiembre",
+        "Hortalizas": 16300,
+        "Frutas": 18100,
+        "Total": 34400
+    },
+    {
+        "Mes": "Octubre",
+        "Hortalizas": 15700,
+        "Frutas": 17600,
+        "Total": 33300
+    },
+    {
+        "Mes": "Noviembre",
+        "Hortalizas": 14900,
+        "Frutas": 16300,
+        "Total": 31200
+    },
+    {
+        "Mes": "Diciembre",
+        "Hortalizas": 17200,
+        "Frutas": 20500,
+        "Total": 37700
+    }
+]
