@@ -45,3 +45,5 @@ Presento aquí los enlaces a las carpetas del repositorio donde tengo los ejerci
   <br>
 + 4.- Python Asistido con ChatGPT: Cómo Crear Apps en Minutos.
   La precision en la elaboración del prompot es clave para obtener buen python generado por el LLM.
+
++ [Proyecto final](https://github.com/luismiguelcasadodiaz/IBM_SkillsBuild_IA_325/blob/main/5.-Proyecto_final/Luis_Casado_Diaz_(2).ipynb)
